@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-Id">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PinkInsight: منصة الرعاية الذكية وتوجيه صحة الثدي</title>
-    <!-- مكتبة لإنشاء رموز QR كود للإحالة الطبية -->
+    <title>PinkInsight: المنصة الذكية المتكاملة لصحة الثدي</title>
+    <!-- مكتبة توليد رمز الاستجابة السريعة QR Code -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
         :root {
@@ -20,21 +20,41 @@
             color: var(--dark-text);
             margin: 0;
             padding: 0;
+            line-height: 1.6;
         }
         header {
             background: linear-gradient(135deg, var(--primary-pink), #ad1457);
             color: var(--white);
             text-align: center;
-            padding: 35px 20px;
+            padding: 40px 20px;
+            position: relative;
+            overflow: hidden;
         }
-        header h1 {
-            margin: 0;
-            font-size: 26px;
+        /* نبض الحياة الحيوي للشعار */
+        .pulse-logo {
+            font-size: 28px;
+            font-weight: bold;
+            animation: livePulse 2s infinite ease-in-out;
+        }
+        @keyframes livePulse {
+            0% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.03); opacity: 1; text-shadow: 0 0 15px rgba(255,255,255,0.6); }
+            100% { transform: scale(1); opacity: 0.9; }
         }
         header p {
             margin-top: 8px;
             font-size: 14px;
             opacity: 0.95;
+        }
+        .developer-tag {
+            background: rgba(255, 255, 255, 0.22);
+            display: inline-block;
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 13px;
+            margin-top: 12px;
+            font-weight: bold;
+            backdrop-filter: blur(5px);
         }
         .container {
             max-width: 850px;
@@ -43,6 +63,7 @@
             padding: 30px;
             border-radius: 16px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            position: relative;
         }
         h2 {
             color: var(--primary-pink);
@@ -93,6 +114,7 @@
             background: var(--primary-pink);
             color: var(--white);
             border-color: #ad1457;
+            box-shadow: 0 0 10px rgba(216, 27, 96, 0.4);
         }
         /* شجرة الحياة التفاعلية */
         .tree-container {
@@ -107,6 +129,11 @@
         .tree-icon {
             font-size: 45px;
             margin-bottom: 5px;
+            animation: treeSway 3s infinite ease-in-out;
+        }
+        @keyframes treeSway {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(3deg); }
         }
         button {
             background-color: var(--primary-pink);
@@ -118,11 +145,40 @@
             border-radius: 8px;
             cursor: pointer;
             width: 100%;
-            transition: background 0.3s;
+            transition: background 0.3s, transform 0.2s;
             margin-top: 15px;
         }
         button:hover {
             background-color: #ad1457;
+            transform: translateY(-2px);
+        }
+        /* تأثير المسح الضوئي المستقبلي (Holographic Scanner Overlay) */
+        #scannerOverlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(216, 27, 96, 0.08);
+            backdrop-filter: blur(2px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            border-radius: 16px;
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--primary-pink);
+        }
+        .scanner-beam {
+            position: absolute;
+            width: 100%;
+            height: 4px;
+            background: var(--primary-pink);
+            box-shadow: 0 0 15px var(--primary-pink);
+            animation: scanMove 1.5s infinite ease-in-out;
+        }
+        @keyframes scanMove {
+            0% { top: 0%; }
+            50% { top: 100%; }
+            100% { top: 0%; }
         }
         /* قسم النتائج والتذكرة الرقمية */
         #resultContainer {
@@ -144,34 +200,70 @@
             display: flex;
             justify-content: center;
         }
-        /* قسم المساعد الذكي سَكينة */
-        .faq-box {
+        /* شات المساعد الذكي سَكينة */
+        .chat-box {
             background: #f3e5f5;
-            padding: 15px 20px;
+            padding: 20px;
             border-radius: 12px;
-            margin-top: 30px;
             border: 1px solid #ce93d8;
+            margin-top: 30px;
         }
-        .faq-box h3 {
-            color: #7b1fa2;
-            margin-top: 0;
-            font-size: 18px;
+        .chat-display {
+            background: #ffffff;
+            height: 150px;
+            border-radius: 8px;
+            padding: 10px;
+            overflow-y: auto;
+            border: 1px solid #e1bee7;
+            margin-bottom: 10px;
+            font-size: 13px;
+        }
+        /* زاوية خرافة أم حقيقة */
+        .quiz-box {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #90caf9;
+            margin-top: 30px;
+        }
+        /* نافذة رسالة اليوم الامتنانية */
+        .affirmation-box {
+            background: #fff8e1;
+            padding: 18px;
+            border-radius: 12px;
+            border: 1px solid #ffe082;
+            text-align: center;
+            margin-top: 30px;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-size: 13px;
+            border-top: 1px solid #eee;
+            margin-top: 40px;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>PinkInsight: المنصة الذكية المتكاملة لصحة الثدي</h1>
-        <p>فحص ذكي، تحديد دقيق للمواقع، وتوجيه جغرافي فوري للعيادات المعتمدة</p>
+        <div class="pulse-logo">PinkInsight: المنصة الذكية المتكاملة لصحة الثدي</div>
+        <p>فحص ذكي، توجيه جغرافي، ومساعد رقمي وقائي بنبض حيوي متطور</p>
+        <div class="developer-tag">إعداد وتحرير الطالبة: دانة ابوعصية (ثالث صحة)</div>
     </header>
 
     <div class="container">
-        
+        <!-- شاشة المسح الضوئي المستقبلي الوهمية -->
+        <div id="scannerOverlay">
+            <div class="scanner-beam"></div>
+            <span style="background: white; padding: 10px 20px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">جاري محاكاة التحليل الحيوي وتوليد التقارير... 🧬</span>
+        </div>
+
         <!-- عنصر شجرة الحياة التفاعلية -->
         <div class="tree-container" id="treeBox">
             <div class="tree-icon" id="treeEmoji">🌳</div>
-            <p id="treeStatus" style="margin: 0; color: #2e7d32; font-weight: bold; font-size: 15px;">حالة المؤشر الوقائي: مستقر، صحي، وينمو بوعيك</p>
+            <p id="treeStatus" style="margin: 0; color: #2e7d32; font-weight: bold; font-size: 15px;">حالة المؤشر الوقائي: مستقر، صحي، وينمو بوعيك الحيوي</p>
         </div>
 
         <h2>1. تحديد مكان الملاحظة أو التغير بدقة</h2>
@@ -195,7 +287,15 @@
         </div>
 
         <div class="section-box">
-            <label>3. اخترِ مدينتك لتوجيهك لأقرب مركز فحص:</label>
+            <label>3. الفئة العمرية لحساب جدول الفحوصات الشخصية:</label>
+            <select id="userAgeGroup">
+                <option value="18-39">من 18 إلى 39 سنة (التركيز على الفحص الذاتي والسريري الدوري)</option>
+                <option value="40+">40 سنة فأكثر (يوصى ببدء الماموجرام السنوي الاحترازي)</option>
+            </select>
+        </div>
+
+        <div class="section-box">
+            <label>4. مدينتك لتوجيهك لأقرب مركز فحص معتمد:</label>
             <select id="userCity">
                 <option value="الرياض">الرياض - مركز الفحص المبكر ومستشفى الملك خالد الجامعي</option>
                 <option value="جدة">جدة - عيادات الثدي ومستشفى الملك فهد</option>
@@ -205,18 +305,43 @@
             </select>
         </div>
 
-        <button onclick="runAdvancedTriage()">إجراء التحليل الذكي وتوليد بطاقة الإحالة الفورية</button>
+        <button onclick="runAdvancedTriage()">⚡ تفعيل مسح التحليل الحيوي وتوليد التقرير المتقدم</button>
 
         <!-- صندوق النتائج والإحالة -->
         <div id="resultContainer"></div>
     </div>
 
-    <!-- قسم المساعد الذكي (سَكينة) -->
-    <div class="container faq-box">
-        <h3>💬 رفيقتك "سَكينة" للرد على الأسئلة الشائعة</h3>
-        <p><b>س: متى يجب أن أبدأ بالفحص الذاتي الشهري؟</b><br>ج: يفضل إجراؤه شهرياً بعد انتهاء الدورة الشهرية بأسبوع، أو في يوم محدد وثابت من كل شهر لمن انقطعت عنهن الدورة.</p>
-        <p><b>س: هل كل تغير أو كتلة تعني الإصابة؟</b><br>ج: قطعاً لا! أكثر من 80% من التغيرات حميدة وطبيعية، ولكن هدفنا هو الاطمئنان المبكر واستشارة الطبيب المتخصص.</p>
+    <!-- المساعد الذكي التفاعلي (شات سَكينة) -->
+    <div class="container chat-box">
+        <h3 style="color: #7b1fa2; margin-top:0;">💬 رفيقتك "سَكينة" (المساعد الذكي الفوري)</h3>
+        <div class="chat-display" id="chatDisplay">
+            <b>سَكينة:</b> أهلاً بكِ يا رفيقتي. اسأليني أي سؤال يراودكِ عن الفحص أو القلق الصحي، وسأجيبكِ فوراً! 🌸<br>
+        </div>
+        <div style="display: flex; gap: 8px;">
+            <input type="text" id="userInputMsg" placeholder="اكتبي سؤالك هنا (مثلاً: متى أفضل وقت للفحص؟)..." style="flex: 1; padding: 10px; border-radius: 8px; border: 1px solid #ccc;">
+            <button onclick="sendChatMessage()" style="width: auto; margin-top: 0; padding: 10px 20px;">إرسال</button>
+        </div>
     </div>
+
+    <!-- زاوية خرافة أم حقيقة -->
+    <div class="container quiz-box">
+        <h3 style="color: #1565c0; margin-top: 0;">⚡ اختبري معلوماتك: خرافة أم حقيقة؟</h3>
+        <p><b>السؤال:</b> هل ارتداء حمالة الصدر لفترات طويلة أو الضيقة يسبب الإصابة بالسرطان؟</p>
+        <button onclick="answerQuiz(false)" style="background: #1976d2; margin-top: 5px;">خرافة (غير صحيح علمياً)</button>
+        <button onclick="answerQuiz(true)" style="background: #0d47a1; margin-top: 5px; margin-right: 5px;">حقيقة علمية</button>
+        <p id="quizResult" style="font-weight: bold; margin-top: 10px;"></p>
+    </div>
+
+    <!-- رسالة الامتنان اليومية -->
+    <div class="container affirmation-box">
+        <h3 style="color: #f57f17; margin-top: 0;">✨ رسالة العناية والامتنان لليوم</h3>
+        <p id="dailyAffirmation" style="font-style: italic; color: #5d4037;">"جسدكِ أمانة، واهتمامكِ بنفسكِ اليوم هو أعظم استثمار في مستقبلكِ المشرق."</p>
+        <button onclick="changeAffirmation()" style="background: #ffa000; width: auto; padding: 8px 18px; font-size: 13px;">تغيير الرسالة</button>
+    </div>
+
+    <footer>
+        تم تطوير وبرمجة هذه المنصة بكل إتقان واحترافية بواسطة الطالبة: <b>دانة ابوعصية</b> (ثالث صحة) &copy; 2026
+    </footer>
 
     <script>
         let chosenArea = "لم يتم التحديد";
@@ -229,8 +354,20 @@
         }
 
         function runAdvancedTriage() {
+            const scanner = document.getElementById('scannerOverlay');
+            scanner.style.display = 'flex';
+
+            // محاكاة تأثير مسح ضوئي مستقبلي لمدة 1.5 ثانية ثم تظهر النتيجة بإنبِهار
+            setTimeout(() => {
+                scanner.style.display = 'none';
+                processResults();
+            }, 1500);
+        }
+
+        function processResults() {
             const symptom = document.getElementById('symptomType').value;
             const city = document.getElementById('userCity').value;
+            const ageGroup = document.getElementById('userAgeGroup').value;
             const resultContainer = document.getElementById('resultContainer');
             const treeEmoji = document.getElementById('treeEmoji');
             const treeStatus = document.getElementById('treeStatus');
@@ -238,39 +375,41 @@
             
             resultContainer.style.display = 'block';
             
+            let screeningAdvice = ageGroup === '40+' 
+                ? "بناءً على فئتك العمرية، نوصي بإجراء فحص الماموجرام السنوي الاحترازي." 
+                : "بناءً على فئتك العمرية، التركيز الأساسي على الفحص الذاتي الشهري والمتابعة الدورية.";
+
             if(symptom !== 'none' || chosenArea !== "لم يتم التحديد") {
-                // حالة تتطلب التوجيه الطبي
                 treeEmoji.innerHTML = '🌱';
                 treeBox.style.backgroundColor = '#ffebee';
                 treeBox.style.borderColor = '#ef9a9a';
                 treeStatus.style.color = '#c62828';
-                treeStatus.innerHTML = 'مؤشر الاهتمام الصحي: يتطلب استشارة طبية عاجلة ومراجعة العيادة المعتمدة';
+                treeStatus.innerHTML = 'مؤشر الاهتمام الصحي: يتطلب استشارة طبية ومراجعة عيادة الفحص المبكر';
 
                 resultContainer.style.backgroundColor = '#ffebee';
                 resultContainer.style.border = '1px solid #ef9a9a';
                 resultContainer.innerHTML = `
-                    <h3 style="color: #c62828; margin-top:0;">⚠️ تنبيه طبي استباقي</h3>
-                    <p>بناءً على اختيارك في <b>(${chosenArea})</b> ونوع الملاحظة، نوصي بالحجز الفوري في أقرب مركز فحص مبكر بمدينة <b>${city}</b>.</p>
+                    <h3 style="color: #c62828; margin-top:0;">⚠️ تقرير التوجيه الطبي المتقدم (Bio-Scan Report)</h3>
+                    <p><b>المنطقة المحددة:</b> ${chosenArea} \vert{} <b>المدينة:</b> ${city}</p>
+                    <p>${screeningAdvice}</p>
                     <div class="ticket-card">
                         <h4 style="color: var(--primary-pink); margin-top:0;">🎫 بطاقة الإحالة الرقمية الآمنة (PinkInsight Pass)</h4>
-                        <p><b>المنطقة المحددة:</b> ${chosenArea}</p>
-                        <p><b>المدينة المختارة:</b> ${city}</p>
+                        <p><b>المحررة والمطورة:</b> دانة ابوعصية (ثالث صحة)</p>
                         <p><b>رقم الإحالة التعريفي:</b> PI-${Math.floor(100000 + Math.random() * 900000)}</p>
-                        <p><b>التوجيه الميداني:</b> توجهي إلى أقرب مركز معتمد في مدينتك مع هذه البطاقة لتسهيل إجراءات الفحص السريري والماموجرام.</p>
+                        <p><b>التوجيه الميداني:</b> توجهي إلى أقرب مركز معتمد في مدينة <b>${city}</b> مع هذا التقرير الحيوي.</p>
                         <div id="qrcode"></div>
                     </div>
+                    <button onclick="window.print()" style="background: #333; margin-top: 15px;">🖨️ طباعة أو حفظ التقرير كملف PDF</button>
                 `;
 
-                // توليد باركود QR كود حقيقي
                 document.getElementById("qrcode").innerHTML = "";
                 new QRCode(document.getElementById("qrcode"), {
-                    text: `PinkInsight-Ref: ${chosenArea} - City: ${city} - Status: Urgent FollowUp`,
+                    text: `PinkInsight-BioScan: ${chosenArea} - City:${city} - Author: Danah Abu Assiyah`,
                     width: 120,
                     height: 120
                 });
 
             } else {
-                // حالة اطمئنانية وسليمة
                 treeEmoji.innerHTML = '🌳';
                 treeBox.style.backgroundColor = '#e8f5e9';
                 treeBox.style.borderColor = '#c8e6c9';
@@ -280,12 +419,29 @@
                 resultContainer.style.backgroundColor = '#e8f5e9';
                 resultContainer.style.border = '1px solid #c8e6c9';
                 resultContainer.innerHTML = `
-                    <h3 style="color: #2e7d32; margin-top:0;">✨ النتائج اطمئنانية ووقائية</h3>
-                    <p>لا توجد أعراض تستدعي القلق. نوصيكِ بالاستمرار في الفحص الذاتي الشهري بانتظام في مدينة <b>${city}</b> للحفاظ على صحتك الوقائية.</p>
+                    <h3 style="color: #2e7d32; margin-top:0;">✨ تقرير الاطمئنان الوقائي الحيوي</h3>
+                    <p>لا توجد أعراض ظاهرة تستدعي القلق. ${screeningAdvice}</p>
+                    <p><b>الخطة المقترحة بمدينة ${city}:</b> استمري في الفحص الذاتي الشهري بانتظام.</p>
+                    <button onclick="window.print()" style="background: #333; margin-top: 15px;">🖨️ طباعة أو حفظ التقرير كملف PDF</button>
                 `;
             }
         }
-    </script>
 
-</body>
-</html>
+        // تفاعل شات سَكينة
+        function sendChatMessage() {
+            const inputField = document.getElementById('userInputMsg');
+            const chatDisplay = document.getElementById('chatDisplay');
+            const text = inputField.value.trim();
+            if(!text) return;
+
+            chatDisplay.innerHTML += `<br><b>أنتِ:</b> ${text}`;
+            
+            let reply = "أهلاً بكِ. أكثر من 80% من التغيرات التي تلاحظها النساء هي تغيرات حميدة وطبيعية، ولكن الاطمئنان المبكر هو سر راحة البال!";
+            if(text.includes('وقت') || text.includes('متى')) {
+                reply = "أفضل وقت لإجراء الفحص الذاتي هو بعد انتهاء الدورة الشهرية بحوالي 3 إلى 5 أيام، أو في يوم محدد وثابت من كل شهر لمن انقطعت عنهن.";
+            } else if(text.includes('خوف') || text.includes('قلق')) {
+                reply = "لا تقلقي أبداً يا رفيقتي، مجرد حرصكِ على الوعي والفحص هو بحد ذاته خطوة وقائية عظيمة تحميكِ وتمنحكِ السكينة.";
+            }
+
+            setTimeout(() => {
+                chatDisplay.innerHTML += `<br><b>سَكينة
