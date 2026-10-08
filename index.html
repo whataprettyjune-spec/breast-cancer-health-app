@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-Id">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PinkInsight: المنصة الذكية المتكاملة لصحة الثدي</title>
     <!-- مكتبة توليد رمز الاستجابة السريعة QR Code -->
@@ -30,7 +30,6 @@
             position: relative;
             overflow: hidden;
         }
-        /* نبض الحياة الحيوي للشعار */
         .pulse-logo {
             font-size: 28px;
             font-weight: bold;
@@ -92,29 +91,29 @@
             font-size: 14px;
             box-sizing: border-box;
         }
-        /* خريطة الجسم التفاعلية */
-        .grid-map {
+        /* مرآة الجسد الحرارية المستقبلية */
+        .thermal-map {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 12px;
             margin-top: 10px;
         }
-        .map-quad {
-            background: var(--white);
-            border: 2px solid #f8bbd0;
-            padding: 15px;
+        .thermal-quad {
+            background: #1a1a2e;
+            border: 2px solid #e94560;
+            padding: 18px;
             text-align: center;
             border-radius: 10px;
             cursor: pointer;
             transition: all 0.3s;
             font-weight: bold;
-            color: #ad1457;
+            color: #ff6584;
+            box-shadow: inset 0 0 10px rgba(233, 69, 96, 0.2);
         }
-        .map-quad:hover, .map-quad.selected {
-            background: var(--primary-pink);
-            color: var(--white);
-            border-color: #ad1457;
-            box-shadow: 0 0 10px rgba(216, 27, 96, 0.4);
+        .thermal-quad:hover, .thermal-quad.selected {
+            background: #e94560;
+            color: #ffffff;
+            box-shadow: 0 0 15px #e94560;
         }
         /* شجرة الحياة التفاعلية */
         .tree-container {
@@ -124,7 +123,6 @@
             border-radius: 12px;
             margin-bottom: 25px;
             border: 1px solid #c8e6c9;
-            transition: all 0.5s;
         }
         .tree-icon {
             font-size: 45px;
@@ -152,7 +150,7 @@
             background-color: #ad1457;
             transform: translateY(-2px);
         }
-        /* تأثير المسح الضوئي المستقبلي (Holographic Scanner Overlay) */
+        /* تأثير المسح الضوئي المستقبلي */
         #scannerOverlay {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -180,25 +178,46 @@
             50% { top: 100%; }
             100% { top: 0%; }
         }
-        /* قسم النتائج والتذكرة الرقمية */
+        /* جواز السفر الصحي والتذكرة */
         #resultContainer {
             margin-top: 25px;
             padding: 20px;
             border-radius: 12px;
             display: none;
         }
-        .ticket-card {
-            background: #ffffff;
-            border: 2px dashed var(--primary-pink);
-            padding: 20px;
-            border-radius: 12px;
+        .passport-card {
+            background: linear-gradient(135deg, #ffffff, #fce4ec);
+            border: 2px solid var(--primary-pink);
+            padding: 22px;
+            border-radius: 14px;
             margin-top: 15px;
             text-align: right;
+            box-shadow: 0 4px 15px rgba(216, 27, 96, 0.15);
         }
         #qrcode {
             margin: 15px auto;
             display: flex;
             justify-content: center;
+        }
+        /* مستشعر الصوت والتنفس */
+        .voice-box {
+            background: #e0f7fa;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #80deea;
+            margin-top: 30px;
+            text-align: center;
+        }
+        .breathing-circle {
+            width: 60px; height: 60px;
+            background: #00acc1;
+            border-radius: 50%;
+            margin: 15px auto;
+            animation: breathAnim 4s infinite ease-in-out;
+        }
+        @keyframes breathAnim {
+            0%, 100% { transform: scale(1); opacity: 0.6; }
+            50% { transform: scale(1.4); opacity: 1; background: #26c6da; }
         }
         /* شات المساعد الذكي سَكينة */
         .chat-box {
@@ -249,15 +268,15 @@
 
     <header>
         <div class="pulse-logo">PinkInsight: المنصة الذكية المتكاملة لصحة الثدي</div>
-        <p>فحص ذكي، توجيه جغرافي، ومساعد رقمي وقائي بنبض حيوي متطور</p>
+        <p>فحص حيوي، توجيه جغرافي، ومساعد رقمي بجواز سفر صحي مستقبلي</p>
         <div class="developer-tag">إعداد وتحرير الطالبة: دانة ابوعصية (ثالث صحة)</div>
     </header>
 
     <div class="container">
-        <!-- شاشة المسح الضوئي المستقبلي الوهمية -->
+        <!-- شاشة المسح الضوئي المستقبلي -->
         <div id="scannerOverlay">
             <div class="scanner-beam"></div>
-            <span style="background: white; padding: 10px 20px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">جاري محاكاة التحليل الحيوي وتوليد التقارير... 🧬</span>
+            <span style="background: white; padding: 10px 20px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">جاري تشغيل محاكي البصمة الحيوية وجواز السفر... 🧬</span>
         </div>
 
         <!-- عنصر شجرة الحياة التفاعلية -->
@@ -266,13 +285,13 @@
             <p id="treeStatus" style="margin: 0; color: #2e7d32; font-weight: bold; font-size: 15px;">حالة المؤشر الوقائي: مستقر، صحي، وينمو بوعيك الحيوي</p>
         </div>
 
-        <h2>1. تحديد مكان الملاحظة أو التغير بدقة</h2>
-        <p>انقري على ربع الثدي الذي تلاحظين فيه أي تغير:</p>
-        <div class="grid-map">
-            <div class="map-quad" onclick="selectQuad(this, 'الربع العلوي الخارجي')">الربع العلوي الخارجي</div>
-            <div class="map-quad" onclick="selectQuad(this, 'الربع العلوي الداخلي')">الربع العلوي الداخلي</div>
-            <div class="map-quad" onclick="selectQuad(this, 'الربع السفلي الخارجي')">الربع السفلي الخارجي</div>
-            <div class="map-quad" onclick="selectQuad(this, 'الربع السفلي الداخلي')">الربع السفلي الداخلي</div>
+        <h2>1. مرآة الجسد الحرارية المستقبلية (تحديد مكان الملاحظة)</h2>
+        <p>انقري على المنطقة في خريطة المسح الحراري لأرباع الثدي:</p>
+        <div class="thermal-map">
+            <div class="thermal-quad" onclick="selectQuad(this, 'الربع العلوي الخارجي')">الربع العلوي الخارجي</div>
+            <div class="thermal-quad" onclick="selectQuad(this, 'الربع العلوي الداخلي')">الربع العلوي الداخلي</div>
+            <div class="thermal-quad" onclick="selectQuad(this, 'الربع السفلي الخارجي')">الربع السفلي الخارجي</div>
+            <div class="thermal-quad" onclick="selectQuad(this, 'الربع السفلي الداخلي')">الربع السفلي الداخلي</div>
         </div>
         <input type="hidden" id="selectedArea" value="لم يتم التحديد">
 
@@ -305,17 +324,26 @@
             </select>
         </div>
 
-        <button onclick="runAdvancedTriage()">⚡ تفعيل مسح التحليل الحيوي وتوليد التقرير المتقدم</button>
+        <button onclick="runAdvancedTriage()">⚡ تفعيل بصمة المسح الحيوي وإصدار جواز السفر الصحي</button>
 
-        <!-- صندوق النتائج والإحالة -->
+        <!-- صندوق النتائج وجواز السفر -->
         <div id="resultContainer"></div>
+    </div>
+
+    <!-- مستشعر المزاج الصوتي والتنفس الرقمي -->
+    <div class="container voice-box">
+        <h3 style="color: #00838f; margin-top:0;">🎙️ محاكي الهدوء والتنفس الحيوي</h3>
+        <p>خذي نفساً عميقاً مع حركة الحلقة التالية لخفض التوتر وطرد القلق:</p>
+        <div class="breathing-circle"></div>
+        <button onclick="simulateVoiceAnalysis()" style="background: #00acc1; width: auto; padding: 10px 20px;">انقر لفحص الاستجابة النفسية والصوتية</button>
+        <p id="voiceResult" style="font-weight: bold; color: #006064; margin-top: 10px;"></p>
     </div>
 
     <!-- المساعد الذكي التفاعلي (شات سَكينة) -->
     <div class="container chat-box">
         <h3 style="color: #7b1fa2; margin-top:0;">💬 رفيقتك "سَكينة" (المساعد الذكي الفوري)</h3>
         <div class="chat-display" id="chatDisplay">
-            <b>سَكينة:</b> أهلاً بكِ يا رفيقتي. اسأليني أي سؤال يراودكِ عن الفحص أو القلق الصحي، وسأجيبكِ فوراً! 🌸<br>
+            <b>سَكينة:</b> أهلاً بكِ يا رفيقتي. اسأليني أي سؤال يراودكِ عن الفحص أو القلق، وسأجيبكِ فوراً! 🌸<br>
         </div>
         <div style="display: flex; gap: 8px;">
             <input type="text" id="userInputMsg" placeholder="اكتبي سؤالك هنا (مثلاً: متى أفضل وقت للفحص؟)..." style="flex: 1; padding: 10px; border-radius: 8px; border: 1px solid #ccc;">
@@ -347,7 +375,7 @@
         let chosenArea = "لم يتم التحديد";
 
         function selectQuad(element, areaName) {
-            document.querySelectorAll('.map-quad').forEach(el => el.classList.remove('selected'));
+            document.querySelectorAll('.thermal-quad').forEach(el => el.classList.remove('selected'));
             element.classList.add('selected');
             chosenArea = areaName;
             document.getElementById('selectedArea').value = areaName;
@@ -357,7 +385,6 @@
             const scanner = document.getElementById('scannerOverlay');
             scanner.style.display = 'flex';
 
-            // محاكاة تأثير مسح ضوئي مستقبلي لمدة 1.5 ثانية ثم تظهر النتيجة بإنبِهار
             setTimeout(() => {
                 scanner.style.display = 'none';
                 processResults();
@@ -390,21 +417,22 @@
                 resultContainer.style.border = '1px solid #ef9a9a';
                 resultContainer.innerHTML = `
                     <h3 style="color: #c62828; margin-top:0;">⚠️ تقرير التوجيه الطبي المتقدم (Bio-Scan Report)</h3>
-                    <p><b>المنطقة المحددة:</b> ${chosenArea} \vert{} <b>المدينة:</b> ${city}</p>
+                    <p><b>المنطقة المحددة:</b> ${chosenArea} | <b>المدينة:</b> ${city}</p>
                     <p>${screeningAdvice}</p>
-                    <div class="ticket-card">
-                        <h4 style="color: var(--primary-pink); margin-top:0;">🎫 بطاقة الإحالة الرقمية الآمنة (PinkInsight Pass)</h4>
+                    <div class="passport-card">
+                        <h4 style="color: var(--primary-pink); margin-top:0;">🛂 جواز السفر الصحي الرقمي المشفر (PinkInsight Passport)</h4>
                         <p><b>المحررة والمطورة:</b> دانة ابوعصية (ثالث صحة)</p>
-                        <p><b>رقم الإحالة التعريفي:</b> PI-${Math.floor(100000 + Math.random() * 900000)}</p>
-                        <p><b>التوجيه الميداني:</b> توجهي إلى أقرب مركز معتمد في مدينة <b>${city}</b> مع هذا التقرير الحيوي.</p>
+                        <p><b>البصمة الحيوية الفريدة:</b> BIO-HASH-${Math.floor(100000 + Math.random() * 900000)}</p>
+                        <p><b>نسبة الوعي الوقائي:</b> 98.5% (مستوى ممتاز)</p>
+                        <p><b>التوجيه الميداني:</b> توجهي إلى أقرب مركز معتمد في مدينة <b>${city}</b> مع هذا الجواز الصحي.</p>
                         <div id="qrcode"></div>
                     </div>
-                    <button onclick="window.print()" style="background: #333; margin-top: 15px;">🖨️ طباعة أو حفظ التقرير كملف PDF</button>
+                    <button onclick="window.print()" style="background: #333; margin-top: 15px;">🖨️ طباعة أو حفظ جواز السفر كملف PDF</button>
                 `;
 
                 document.getElementById("qrcode").innerHTML = "";
                 new QRCode(document.getElementById("qrcode"), {
-                    text: `PinkInsight-BioScan: ${chosenArea} - City:${city} - Author: Danah Abu Assiyah`,
+                    text: `PinkInsight-Passport: ${chosenArea} - City: ${city} - Author: Danah Abu Assiyah`,
                     width: 120,
                     height: 120
                 });
@@ -419,12 +447,31 @@
                 resultContainer.style.backgroundColor = '#e8f5e9';
                 resultContainer.style.border = '1px solid #c8e6c9';
                 resultContainer.innerHTML = `
-                    <h3 style="color: #2e7d32; margin-top:0;">✨ تقرير الاطمئنان الوقائي الحيوي</h3>
+                    <h3 style="color: #2e7d32; margin-top:0;">✨ جواز السفر الصحي والاطمئنان الوقائي</h3>
                     <p>لا توجد أعراض ظاهرة تستدعي القلق. ${screeningAdvice}</p>
-                    <p><b>الخطة المقترحة بمدينة ${city}:</b> استمري في الفحص الذاتي الشهري بانتظام.</p>
-                    <button onclick="window.print()" style="background: #333; margin-top: 15px;">🖨️ طباعة أو حفظ التقرير كملف PDF</button>
+                    <div class="passport-card">
+                        <h4 style="color: var(--primary-pink); margin-top:0;">🛂 جواز السفر الصحي الرقمي المشفر (PinkInsight Passport)</h4>
+                        <p><b>المحررة والمطورة:</b> دانة ابوعصية (ثالث صحة)</p>
+                        <p><b>البصمة الحيوية الفريدة:</b> BIO-HASH-${Math.floor(100000 + Math.random() * 900000)}</p>
+                        <p><b>الحالة:</b> سليم ووقائي في مدينة ${city}</p>
+                        <div id="qrcode"></div>
+                    </div>
+                    <button onclick="window.print()" style="background: #333; margin-top: 15px;">🖨️ طباعة أو حفظ جواز السفر كملف PDF</button>
                 `;
+
+                document.getElementById("qrcode").innerHTML = "";
+                new QRCode(document.getElementById("qrcode"), {
+                    text: `PinkInsight-SafePass - City: ${city} - Author: Danah Abu Assiyah`,
+                    width: 120,
+                    height: 120
+                });
             }
+        }
+
+        // محاكي الصوت
+        function simulateVoiceAnalysis() {
+            const res = document.getElementById('voiceResult');
+            res.innerHTML = "تحليل نبض الصوت... تم رصد طاقة إيجابية وهدوء بنسبة 95%. سَكينة تنصحكِ بمواصلة الابتسامة!";
         }
 
         // تفاعل شات سَكينة
@@ -444,4 +491,37 @@
             }
 
             setTimeout(() => {
-                chatDisplay.innerHTML += `<br><b>سَكينة
+                chatDisplay.innerHTML += `<br><b>سَكينة:</b> ${reply}`;
+                chatDisplay.scrollTop = chatDisplay.scrollHeight;
+            }, 500);
+
+            inputField.value = "";
+        }
+
+        // لعبة خرافة أم حقيقة
+        function answerQuiz(isTrue) {
+            const res = document.getElementById('quizResult');
+            if(!isTrue) {
+                res.style.color = "#2e7d32";
+                res.innerHTML = "إجابة صحيحة وصائبة تماماً! ارتداء حمالة الصدر لا علاقة له بظهور الأورام، وهذه شائعة طبية خاطئة تماماً.";
+            } else {
+                res.style.color = "#c62828";
+                res.innerHTML = "إجابة غير دقيقة! هذه خرافة شائعة وليست حقيقة علمية أبداً.";
+            }
+        }
+
+        // رسائل الامتنان
+        const affirmations = [
+            "جسدكِ أمانة، واهتمامكِ بنفسكِ اليوم هو أعظم استثمار في مستقبلكِ المشرق.",
+            "الوعي المبكر هو القوة الحقيقية التي تصنع حياة صحية مديدة ومطمئنة.",
+            "كل خطوة تصنعينها نحو معرفة صحتكِ، تعكس مدى نضجكِ ووعيكِ العالي.",
+            "الاطمئنان ليس صدفة، بل هو نتيجة اهتمام واعٍ وعناية حقيقية بالذات."
+        ];
+        function changeAffirmation() {
+            const randomMsg = affirmations[Math.floor(Math.random() * affirmations.length)];
+            document.getElementById('dailyAffirmation').innerText = `"${randomMsg}"`;
+        }
+    </script>
+
+</body>
+</html>
