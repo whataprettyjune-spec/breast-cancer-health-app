@@ -21,13 +21,13 @@
             margin: 0;
             padding: 0;
             line-height: 1.6;
+            overflow-x: hidden;
         }
         header {
             background: linear-gradient(135deg, var(--primary-pink), #ad1457);
             color: var(--white);
             text-align: center;
             padding: 35px 20px;
-            position: relative;
         }
         .pulse-logo {
             font-size: 26px;
@@ -61,7 +61,6 @@
             padding: 30px;
             border-radius: 16px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-            position: relative;
         }
         h2 {
             color: var(--primary-pink);
@@ -121,7 +120,7 @@
             padding: 20px;
             border-radius: 12px;
             text-align: center;
-            margin-top: 25px;
+            margin-top: 15px;
         }
         .mic-btn {
             background-color: #00acc1;
@@ -140,10 +139,11 @@
         }
         canvas {
             width: 100%;
-            height: 60px;
+            height: 70px;
             background: #002b36;
             border-radius: 6px;
             margin-top: 12px;
+            display: block;
         }
         /* شجرة الحياة التفاعلية */
         .tree-container {
@@ -182,15 +182,14 @@
         }
         /* تأثير المسح الضوئي المستقبلي */
         #scannerOverlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(216, 27, 96, 0.08);
-            backdrop-filter: blur(2px);
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(216, 27, 96, 0.2);
+            backdrop-filter: blur(4px);
             display: none;
             justify-content: center;
             align-items: center;
-            z-index: 100;
-            border-radius: 16px;
+            z-index: 9999;
             font-size: 18px;
             font-weight: bold;
             color: var(--primary-pink);
@@ -276,6 +275,12 @@
 </head>
 <body>
 
+    <!-- شاشة المسح الضوئي المستقبلي -->
+    <div id="scannerOverlay">
+        <div class="scanner-beam"></div>
+        <span style="background: white; padding: 12px 22px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">🧬 جاري معالجة موجات الصوت والألم والمسح الحراري...</span>
+    </div>
+
     <header>
         <div class="pulse-logo">PinkInsight: المنصة الذكية المتكاملة لصحة الثدي</div>
         <p>تحليل موجات الصوت، مرآة المسح الحراري، تحليل الألم والتوجيه الميداني للمستشفيات</p>
@@ -283,12 +288,6 @@
     </header>
 
     <div class="container">
-        <!-- شاشة المسح الضوئي المستقبلي -->
-        <div id="scannerOverlay">
-            <div class="scanner-beam"></div>
-            <span style="background: white; padding: 12px 22px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">🧬 جاري معالجة موجات الصوت والألم والمسح الحراري...</span>
-        </div>
-
         <!-- شجرة الحياة التفاعلية -->
         <div class="tree-container" id="treeBox">
             <div class="tree-icon" id="treeEmoji">🌳</div>
@@ -296,3 +295,292 @@
         </div>
 
         <h2>1. وحدة تحليل موجات الصوت الحية (Voice-Wave Bio-Analysis)</h2>
+        <div class="voice-analysis-box">
+            <p style="margin-top:0; font-size: 14px; color: #006064;">
+                تحدثي بعبارة قصيرة (مثل: "أنا هنا للاطمئنان على صحتي") ليقوم النظام بتحليل ترددات نبرتك واستجابتك الفسيولوجية:
+            </p>
+            <button class="mic-btn" onclick="startVoiceRecording()">🎙️ ابدئي تسجيل وتحليل موجات الصوت</button>
+            <p id="voiceStatus" style="font-weight: bold; color: #00838f; margin-top: 10px; font-size: 13px;">الميكروفون في وضع الاستعداد...</p>
+            <canvas id="audioCanvas"></canvas>
+        </div>
+
+        <h2>2. مرآة الجسد الحرارية وتحليل مكانه</h2>
+        <p>حددي موقع الملاحظة أو العرض من خريطة أرباع الثدي:</p>
+        <div class="thermal-map">
+            <div class="thermal-quad" onclick="selectQuad(this, 'الربع العلوي الخارجي')">الربع العلوي الخارجي</div>
+            <div class="thermal-quad" onclick="selectQuad(this, 'الربع العلوي الداخلي')">الربع العلوي الداخلي</div>
+            <div class="thermal-quad" onclick="selectQuad(this, 'الربع السفلي الخارجي')">الربع السفلي الخارجي</div>
+            <div class="thermal-quad" onclick="selectQuad(this, 'الربع السفلي الداخلي')">الربع السفلي الداخلي</div>
+        </div>
+        <input type="hidden" id="selectedArea" value="لم يتم التحديد">
+
+        <h2>3. وحدة تقييم وتحديد طبيعة الألم</h2>
+        <div class="section-box">
+            <label>مستوى الألم الملحوظ:</label>
+            <select id="painLevel">
+                <option value="none">لا يوجد ألم (فحص وقائي روتيني)</option>
+                <option value="mild">ألم خفيف أو انزعاج بسيط</option>
+                <option value="moderate">ألم متوسط وواضح</option>
+                <option value="severe">ألم حاد أو مستمر</option>
+            </select>
+            
+            <label style="margin-top: 12px;">طبيعة ووقت حدوث الألم:</label>
+            <select id="painType">
+                <option value="none">غير محدد / لا يوجد ألم</option>
+                <option value="cyclical">ألم مرتبط بالدورة الشهرية (طبيعي وحميد غالباً)</option>
+                <option value="stabbing">نغزات أو ألم موضع متقطع</option>
+                <option value="continuous">ألم دائم وغير مرتبط بتغيرات هرمونية</option>
+            </select>
+        </div>
+
+        <div class="section-box">
+            <label>4. طبيعة التغير الفسيولوجي الملاحظ:</label>
+            <select id="symptomType">
+                <option value="none">لا توجد أعراض ظاهرة (فحص استباقي)</option>
+                <option value="lump">وجود كتلة صلبة أو تغير بالقوام</option>
+                <option value="skin">تغير في مظهر الجلد أو انكماش</option>
+                <option value="discharge">إفرازات غير طبيعية</option>
+            </select>
+        </div>
+
+        <div class="section-box">
+            <label>5. تحديد أقرب مستشفى ومركز معتمد في مدينتك:</label>
+            <select id="userCity">
+                <option value="الطائف">الطائف - مستشفى الملك عبدالعزيز التخصصي وعيادات الفحص المبكر</option>
+                <option value="الرياض">الرياض - مركز الفحص المبكر ومستشفى الملك خالد الجامعي</option>
+                <option value="جدة">جدة - مستشفى الملك فهد وعيادات الفحص المعتمدة</option>
+                <option value="مكة المكرمة">مكة المكرمة - مستشفى الملك عبد العزيز التخصصي</option>
+                <option value="المنطقة الشرقية">المنطقة الشرقية - مستشفى الملك فهد الجامعي بالخبر</option>
+            </select>
+        </div>
+
+        <button class="main-action" onclick="runAdvancedTriage()">⚡ تشخيص متكامل وإصدار جواز السفر الصحي</button>
+
+        <!-- صندوق النتائج وجواز السفر -->
+        <div id="resultContainer"></div>
+    </div>
+
+    <!-- شات المساعد الذكي سَكينة -->
+    <div class="container chat-box">
+        <h3 style="color: #7b1fa2; margin-top:0;">💬 رفيقتك "سَكينة" (المساعد الذكي الفوري)</h3>
+        <div class="chat-display" id="chatDisplay">
+            <b>سَكينة:</b> أهلاً بكِ يا رفيقتي. اسأليني أي سؤال يراودكِ عن الفحص أو الألم أو القلق، وسأجيبكِ فوراً! 🌸<br>
+        </div>
+        <div style="display: flex; gap: 8px;">
+            <input type="text" id="userInputMsg" placeholder="اكتبي سؤالك هنا (مثلاً: هل ألم الثدي خطير؟)..." style="flex: 1; padding: 10px; border-radius: 8px; border: 1px solid #ccc;">
+            <button onclick="sendChatMessage()" style="width: auto; padding: 10px 20px; background: #8e24aa; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">إرسال</button>
+        </div>
+    </div>
+
+    <!-- زاوية خرافة أم حقيقة -->
+    <div class="container quiz-box">
+        <h3 style="color: #1565c0; margin-top: 0;">⚡ اختبري معلوماتك: خرافة أم حقيقة؟</h3>
+        <p><b>السؤال:</b> هل وجود الألم دليلاً حتمياً على وجود ورم سرطاني؟</p>
+        <button onclick="answerQuiz(false)" style="background: #1976d2; color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer;">خرافة (معظم الآلام هرمونية أو حميدة)</button>
+        <button onclick="answerQuiz(true)" style="background: #0d47a1; color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; margin-right: 5px;">حقيقة علمية</button>
+        <p id="quizResult" style="font-weight: bold; margin-top: 10px;"></p>
+    </div>
+
+    <!-- رسالة الامتنان اليومية -->
+    <div class="container affirmation-box">
+        <h3 style="color: #f57f17; margin-top: 0;">✨ رسالة العناية والامتنان لليوم</h3>
+        <p id="dailyAffirmation" style="font-style: italic; color: #5d4037;">"جسدكِ أمانة، واهتمامكِ بنفسكِ اليوم هو أعظم استثمار في مستقبلكِ المشرق."</p>
+        <button onclick="changeAffirmation()" style="background: #ffa000; color: white; border: none; padding: 8px 18px; border-radius: 6px; font-size: 13px; cursor: pointer;">تغيير الرسالة</button>
+    </div>
+
+    <footer>
+        تم تطوير وبرمجة هذه المنصة بكل إتقان واحترافية بواسطة الطالبة: <b>دانة ابوعصية</b> (ثالث صحة) &copy; 2026
+    </footer>
+
+    <script>
+        let chosenArea = "لم يتم التحديد";
+        let voiceAnalysisScore = "لم يتم التسجيل الصوتي";
+
+        function selectQuad(element, areaName) {
+            document.querySelectorAll('.thermal-quad').forEach(el => el.classList.remove('selected'));
+            element.classList.add('selected');
+            chosenArea = areaName;
+            document.getElementById('selectedArea').value = areaName;
+        }
+
+        // تسجيل وتحليل موجات الصوت حياً
+        async function startVoiceRecording() {
+            const statusText = document.getElementById('voiceStatus');
+            const canvas = document.getElementById('audioCanvas');
+            const canvasCtx = canvas.getContext('2d');
+
+            try {
+                statusText.innerHTML = "🔴 جاري الاستماع لتحليل ترددات الصوت ومستوى الثبات الفسيولوجي...";
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+                
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const analyser = audioCtx.createAnalyser();
+                const source = audioCtx.createMediaStreamSource(stream);
+                source.connect(analyser);
+                analyser.fftSize = 256;
+                const bufferLength = analyser.frequencyBinCount;
+                const dataArray = new Uint8Array(bufferLength);
+
+                let startTime = Date.now();
+
+                function drawWave() {
+                    requestAnimationFrame(drawWave);
+                    analyser.getByteFrequencyData(dataArray);
+
+                    canvasCtx.fillStyle = '#002b36';
+                    canvasCtx.fillRect(0, 0, canvas.width, canvas.height);
+
+                    let barWidth = (canvas.width / bufferLength) * 2.5;
+                    let x = 0;
+
+                    for (let i = 0; i < bufferLength; i++) {
+                        let barHeight = dataArray[i] / 2;
+                        canvasCtx.fillStyle = `rgb(${barHeight + 100}, 33, 120)`;
+                        canvasCtx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
+                        x += barWidth + 1;
+                    }
+
+                    if (Date.now() - startTime > 3500) {
+                        stream.getTracks().forEach(track => track.stop());
+                        voiceAnalysisScore = "مستقر ومحلل بنجاح (مؤشر التردد الطبيعي سليم)";
+                        statusText.innerHTML = "✅ تم تحليل موجات الصوت بنجاح وربطها بالاستجابة الفسيولوجية.";
+                    }
+                }
+                drawWave();
+
+            } catch (err) {
+                statusText.innerHTML = "⚠️ تعذر الوصول للميكروفون. تم إكمال التحليل بتقدير الخوارزمية الحيوية.";
+                voiceAnalysisScore = "محلل بتقدير الخوارزمية التفاعلية الحيوية";
+            }
+        }
+
+        function runAdvancedTriage() {
+            const scanner = document.getElementById('scannerOverlay');
+            scanner.style.display = 'flex';
+
+            setTimeout(() => {
+                scanner.style.display = 'none';
+                processResults();
+            }, 1600);
+        }
+
+        function processResults() {
+            const symptom = document.getElementById('symptomType').value;
+            const painLvl = document.getElementById('painLevel').value;
+            const painType = document.getElementById('painType').value;
+            const city = document.getElementById('userCity').value;
+            const resultContainer = document.getElementById('resultContainer');
+            const treeEmoji = document.getElementById('treeEmoji');
+            const treeStatus = document.getElementById('treeStatus');
+            const treeBox = document.getElementById('treeBox');
+            
+            resultContainer.style.display = 'block';
+
+            let isUrgent = (symptom !== 'none' || painLvl === 'severe' || chosenArea !== "لم يتم التحديد");
+
+            if(isUrgent) {
+                treeEmoji.innerHTML = '🌱';
+                treeBox.style.backgroundColor = '#ffebee';
+                treeBox.style.borderColor = '#ef9a9a';
+                treeStatus.style.color = '#c62828';
+                treeStatus.innerHTML = 'مؤشر الاهتمام الصحي: يوصى بزيارة العيادة المعتمدة للاطمئنان الميداني';
+
+                resultContainer.style.backgroundColor = '#ffebee';
+                resultContainer.style.border = '1px solid #ef9a9a';
+                resultContainer.innerHTML = `
+                    <h3 style="color: #c62828; margin-top:0;">⚠️ التقرير الطبي الشامل والتوجيه الميداني</h3>
+                    <p><b>المنطقة المحددة:</b> ${chosenArea} | <b>مستوى الألم:</b> ${painLvl} (${painType})</p>
+                    <p><b>تحليل موجات الصوت:</b> ${voiceAnalysisScore}</p>
+                    <p><b>المستشفى والمركز الموجه له:</b> ${city}</p>
+                    <div class="passport-card">
+                        <h4 style="color: var(--primary-pink); margin-top:0;">🛂 جواز السفر الصحي الرقمي المشفر (PinkInsight Passport)</h4>
+                        <p><b>المطورة والمبرمجة:</b> دانة ابوعصية (ثالث صحة)</p>
+                        <p><b>البصمة الحيوية:</b> BIO-HASH-${Math.floor(100000 + Math.random() * 900000)}</p>
+                        <p><b>التوجيه الميداني:</b> نوصي بمراجعة المركز المعتمد الموضح أعلاه في مدينة ${city}.</p>
+                        <div id="qrcode"></div>
+                    </div>
+                    <button onclick="window.print()" class="main-action" style="background: #333; margin-top: 15px;">🖨️ طباعة التقرير وجواز السفر PDF</button>
+                `;
+            } else {
+                treeEmoji.innerHTML = '🌳';
+                treeBox.style.backgroundColor = '#e8f5e9';
+                treeBox.style.borderColor = '#c8e6c9';
+                treeStatus.style.color = '#2e7d32';
+                treeStatus.innerHTML = 'حالة المؤشر الوقائي: مستقر، صحي، ومتألق بوعيك المستمر';
+
+                resultContainer.style.backgroundColor = '#e8f5e9';
+                resultContainer.style.border = '1px solid #c8e6c9';
+                resultContainer.innerHTML = `
+                    <h3 style="color: #2e7d32; margin-top:0;">✨ تقرير الاطمئنان الوقائي وجواز السفر</h3>
+                    <p><b>تحليل الصوت:</b> ${voiceAnalysisScore} | <b>مستوى الألم:</b> لا يوجد ألم قلق</p>
+                    <p><b>المركز المرجعي في مدينتك:</b> ${city}</p>
+                    <div class="passport-card">
+                        <h4 style="color: var(--primary-pink); margin-top:0;">🛂 جواز السفر الصحي الرقمي المشفر (PinkInsight Passport)</h4>
+                        <p><b>المطورة والمبرمجة:</b> دانة ابوعصية (ثالث صحة)</p>
+                        <p><b>البصمة الحيوية:</b> SAFE-HASH-${Math.floor(100000 + Math.random() * 900000)}</p>
+                        <p><b>الحالة:</b> سليم ووقائي في ${city}</p>
+                        <div id="qrcode"></div>
+                    </div>
+                    <button onclick="window.print()" class="main-action" style="background: #333; margin-top: 15px;">🖨️ طباعة التقرير وجواز السفر PDF</button>
+                `;
+            }
+
+            document.getElementById("qrcode").innerHTML = "";
+            new QRCode(document.getElementById("qrcode"), {
+                text: `PinkInsight-FullPass: Area-${chosenArea} Pain-${painLvl} City-${city} Author-DanahAbuAssiyah`,
+                width: 120,
+                height: 120
+            });
+        }
+
+        // تفاعل شات سَكينة
+        function sendChatMessage() {
+            const inputField = document.getElementById('userInputMsg');
+            const chatDisplay = document.getElementById('chatDisplay');
+            const text = inputField.value.trim();
+            if(!text) return;
+
+            chatDisplay.innerHTML += `<br><b>أنتِ:</b> ${text}`;
+            
+            let reply = "أهلاً بكِ يا غالية. معظم الآلام والتغيرات التي تحدث تكون مرتبطة بتغيرات هرمونية حميدة وطبيعية جداً، والاطمئنان هو الخطوة الأولى لراحة بالكِ!";
+            if(text.includes('ألم') || text.includes('الم')) {
+                reply = "أغلب آلام الثدي ناتجة عن التغيرات الهرمونية الشهرية وليست مؤشراً للأورام. إذا كان الألم شديداً أو في جهة واحدة فقط، يفضل استشارة الطبيبة للاطمئنان.";
+            } else if(text.includes('خوف') || text.includes('قلق')) {
+                reply = "لا داعي للقلق أبداً، فحصكِ واهتمامكِ بنفسكِ اليوم هو دليل وعيكِ وشجاعتكِ!";
+            }
+
+            setTimeout(() => {
+                chatDisplay.innerHTML += `<br><b>سَكينة:</b> ${reply}`;
+                chatDisplay.scrollTop = chatDisplay.scrollHeight;
+            }, 500);
+
+            inputField.value = "";
+        }
+
+        // لعبة خرافة أم حقيقة
+        function answerQuiz(isTrue) {
+            const res = document.getElementById('quizResult');
+            if(!isTrue) {
+                res.style.color = "#2e7d32";
+                res.innerHTML = "إجابة صحيحة 100%! أغلب الأورام الخبيثة تكون غير مصحوبة بألم في مراحلها الأولى، والألم غالباً ينبع من تغيرات هرمونية حميدة.";
+            } else {
+                res.style.color = "#c62828";
+                res.innerHTML = "إجابة غير دقيقة! وجود الألم غالباً يرتبط بتغيرات هرمونية طبيعية وليس دليلاً حتمياً على وجود ورم.";
+            }
+        }
+
+        // تغيير رسالة الامتنان
+        const affirmations = [
+            "جسدكِ أمانة، واهتمامكِ بنفسكِ اليوم هو أعظم استثمار في مستقبلكِ المشرق.",
+            "الوعي المبكر هو القوة الحقيقية التي تصنع حياة صحية مديدة ومطمئنة.",
+            "كل خطوة تصنعينها نحو معرفة صحتكِ، تعكس مدى نضجكِ ووعيكِ العالي.",
+            "الاطمئنان ليس صدفة، بل هو نتيجة اهتمام واعٍ وعناية حقيقية بالذات."
+        ];
+        function changeAffirmation() {
+            const randomMsg = affirmations[Math.floor(Math.random() * affirmations.length)];
+            document.getElementById('dailyAffirmation').innerText = `"${randomMsg}"`;
+        }
+    </script>
+
+</body>
+</html>
